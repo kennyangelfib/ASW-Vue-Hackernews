@@ -1,4 +1,4 @@
-# ASW-React-Hackernews
+# ASW-Vue-Hackernews
 ASW project react repository
 
 Franco Araujo  
