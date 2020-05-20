@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
@@ -7,7 +7,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
-
+//import newest from './components/newest.vue'
 export default {
   name: 'App',
   components: {
@@ -25,4 +25,16 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+</style> -->
+<template>
+  <div class="container">
+    <router-view ></router-view>
+    <p>"fadosfnoain"</p>
+  </div>
+</template>
+<script>
+export default{
+}
+</script>
+<style lang="scss">
 </style>
