@@ -1,89 +1,124 @@
 <template>
-
-   {% for contribution in contribution_list %}
-       <tr class="athing" id="{{contribution.pk}}">
-           <td align="right" valign="top" class="title"><span class="rank">{{ forloop.counter }}.</span></td>
-           <td valign="top" class="votelinks">
-               <center>
-                    {% if not user.is_authenticated %}
-                        <button onclick="location.href = '{% url 'submit' %}';" id="myButton" class="votearrow"></button>
-
-                    {% elif contribution.id_contribution in own  %}
-                        <font color="#ff6600"> *</font>
-                        <br>
-                        <img height="1" width="14">
-                    {% else %}
-                        {% if contribution.id_contribution not in voted %}
-                            <button class="votearrow" id="vote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                        {% else %}
-                            <button class="votearrowhidden" id="votehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                        {% endif %}
-                    {% endif %}
-               </center>
-           </td>
-           <!-- aqui solo definimos en la linea corespondiente al titulo -->
-           <td class="title">
-            <a href="{% url 'item' %}?id={{contribution.id_contribution}}" class="storylink" rel="nofollow">ASK HN: {{contribution.title}}</a>
-           </td>
-       </tr>
-       <tr>
-           <td colspan="2"></td>
-           <td class="subtext">
-            <span class="score" id="score{{ contribution.id_contribution }}" points="{{contribution.points.count}}">{{contribution.getpoints}}
-
-                {% if contribution.getpoints == 1 %}
-                    point
-                {% else %}
-                    points
-                {% endif %}
-
-            </span> by <a href="{% url 'user' %}?id={{contribution.author.username}}"> {{contribution.author}} </a>
-
-            <span class="age">
-                <a href="{% url 'item' %}?id={{contribution.id_contribution }}"> {{contribution.whenpublished}} </a> |
-            </span>  
-            {% if user.is_authenticated %}
-                {% if contribution.id_contribution in own %}
-                <span> 
-                    <a href="{% url 'edit' %}?id={{contribution.id_contribution}}">edit</a> |
-                    <a href="{% url 'delete-confirm' %}?id={{contribution.id_contribution}}">delete</a>
-                </span>   
-                {% else %}
-                    {% if contribution.id_contribution in voted %} 
-                        <button class="unvote" id="unvote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button> 
-                     {% else %}
-                    <button class="unvotehidden" id="unvotehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button>
-                    {% endif %}
-                    <a href="{% url 'item' %}?id={{ contribution.id_contribution }}">
-                    {% if contribution.comments == 0 %}
-                        discuss 
-                    {% else %}
-                        {{ contribution.comments }} comments
-                    {% endif  %}
-                    </a>   
-                {% endif %}
-            {%else%}
-            <a href="{% url 'item' %}?id={{ contribution.id_contribution }}">
-                {% if contribution.comments == 0 %}
-                    discuss
-                {% else %}
-                    {{ contribution.comments }} comments
-                {% endif  %}
-            </a> 
-            {% endif %}  
-           </td>
-       </tr>
-       <tr class="spacer" style="height:5px"></tr>                        
-   {% endfor %}
-{% endblock content %}
-
+    <span>
+        <div v-for="index in contribution_list.length" :key="index">
+            <tr class="athing">
+                <td align="right" valign="top" class="title"><span class="rank"> {{index}}.</span></td>
+                <td valign="top" class="votelinks">
+                    <center>
+                        <span v-if="contribution_list[index-1].author == user.username" style="text-align=center">
+                            <font color="#ff6600" >*</font>
+                            <img height="1" width="14">
+                        </span>
+                        <span v-else>
+                            <button class="votearrow"/>
+                        </span>    
+                   <!-- Here should evaluate if it's voted or not by the user -->
+                        <!-- <span v-else-if="">
+                                {% if contribution.id_contribution not in voted %}
+                                    <button class="votearrow" id="vote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
+                                {% else %}
+                                    <button class="votearrowhidden" id="votehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
+                                {% endif %}
+                            </span>
+                            {% endif %} -->
+                    </center>
+                </td>
+                <td class="title">
+                <a :href="'/item?id='+ contribution_list[index-1].id_contribution" class="storylink" rel="nofollow">ASK HN: {{contribution_list[index-1].title}}</a>
+                </td>
+            </tr>
+            <!-- <tr class="spacer" style="height:2px"></tr> -->
+            <tr>
+                <td colspan="2"></td>
+                <td class="subtext">
+                    <span class="score">{{contribution_list[index-1].points}} </span>
+                    <span v-if="contribution_list[index-1].points == 1"> point </span> 
+                    <span v-else> points </span>    
+                    by 
+                    <a :href="'/user?id=' + contribution_list[index-1].author"> {{contribution_list[index-1].author}} </a>
+                    <span class="age">
+                        <!-- "2020-05-06T18:05:21.582592" -->
+                        <!-- <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished("2020-05-06T18:05:21.582592")}} </a> | -->
+                        <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished(contribution_list[index-1].creation_date)}} </a> |
+                    </span>  
+                    <span v-if="contribution_list[index-1].author == user.username"> 
+                        <a :href="'/edit?id='+ contribution_list[index-1].id_contribution">edit</a> |
+                        <a :href="'/delete-confirm?id='+ contribution_list[index-1].id_contribution">delete</a>
+                    </span>
+                    <span v-else> 
+                        <!-- Here should evaluate if it's voted or not by the user -->
+                        <!-- {% if contribution.id_contribution in voted %} 
+                            <button class="unvote" id="unvote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button> 
+                            {% else %}
+                        <button class="unvotehidden" id="unvotehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button>
+                        {% endif %} -->
+                        <a :href="'/item?id='+ contribution_list[index-1].id_contribution">
+                            <span v-if="contribution_list[index-1].comments==0">
+                                discuss
+                            </span>   
+                            <span v-else-if="contribution_list[index-1].comments==1">
+                                1 comment
+                            </span>
+                            <span v-else>
+                                {{contribution_list[index-1].comments }} comments
+                            </span>
+                        </a>   
+                    </span>
+                </td>
+            </tr>
+            <tr class="spacer" style="height:10px"></tr>                
+        </div>
+    </span>
 </template>
 <script>
+//import VueJwtDecode from 'vue-jwt-decode';
+import axios from "axios";
 export default {
-    
+    name: 'Ask',
+    computed:{ 
+    },
+    data(){
+        return{
+            user:{
+                username:'kenny.angel.alejandro',
+                karma: 1
+            },
+            contribution_list: []
+        }
+    },
+    methods:{
+        whenpublished(creation_date){
+            let y = '"'+ creation_date +'"';
+            let dateStr = JSON.parse(y);
+            let date = new Date(dateStr);
+            var moment = require('moment')
+            return moment(date).fromNow();
+        },
+        getContributionsAsk (){
+            console.log("IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
+            let config = {
+                headers: {
+                    Authorization: 'J56g50Vu.zX5Ax15Z7MJ1am1npKRhc7bzxLSznPa1',
+                }
+            }
+            // For now we are authentication with a provisional APIkey
+            axios.get(
+                "http://localhost:8000/api/asks",config
+            ).then(response => {
+                console.log("It went Ok----------------------------------------")
+                //console.log(response.data);
+                this.contribution_list = response.data;
+            }).catch((error) => {
+                    console.log(error);
+            });
+        }
+    },
+    mounted(){
+        this.getContributionsAsk();
+    }
 }
+
 </script>
-
-<style lang="stylus">
-
+<style>
+    @import '../assets/CSS/style.css';
 </style>

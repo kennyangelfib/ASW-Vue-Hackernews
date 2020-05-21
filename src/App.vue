@@ -98,6 +98,9 @@ export default {
         localStorage.removeItem('vue-authenticate.vueauth_token');
         window.location.href = '/login';
     },
+  },
+  mounted(){
+      //obtener el usurio con una peticion de promesa
   }
 }
 </script>
@@ -111,7 +114,6 @@ export default {
     color: #fff;
     }
     #logout_button {
-
         background-color: Transparent;
         background-repeat:no-repeat;
         border: none;

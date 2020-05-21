@@ -1,9 +1,9 @@
 import Home from '@/components/Home';
 import Login from '@/components/Login'
 import Dismiss from '@/components/Dismiss';
+import Ask from '@/components/Ask';
 import Newest from '@/components/Newest';
 // import Router from 'vue-router';
-
 
 export const routes = [
     {
@@ -31,11 +31,11 @@ export const routes = [
         name: 'Newest',
         component: Newest 
     },
-    // {
-    //     path: '/ask' ,
-    //     name: 'Ask',
-    //     component: Ask 
-    // },
+    {
+        path: '/ask' ,
+        name: 'Ask',
+        component: Ask 
+    },
     // {
     //     path: '/threads' ,
     //     name: 'Threads',
