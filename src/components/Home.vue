@@ -1,10 +1,9 @@
 <template>
     <div>
         <div>
-            Welcome home!
+            Welcome to Hacker News!
         </div>
         <div>
-            <button @click="authenticate('google')">auth Google</button>
         </div>
     </div>
 </template>
@@ -12,9 +11,6 @@
 import { authMixin } from '../mixins/authMixin'
 export default {
     mixins: [ authMixin ],
-    data(){
-        
-    }
 }
 </script>
 <style lang="scss">

@@ -1,40 +1,125 @@
-<!--<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
 
+<template>
+<div>
+    <center>
+        <table id="hnmain" width="85%" cellspacing="0" cellpadding="0" border="0" bgcolor="#f6f6ef">
+            <tbody>
+                <tr v-if="haveToken">
+                    <td style ="background-color :#ff6600">
+                        <table style="padding:2px" width="100%" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                                <tr>
+                                    <td style="width:18px;padding-right:4px">
+
+                                        <router-link to="/">
+                                                 <img src="https://news.ycombinator.com/y18.gif" style="border:1px white solid;" width="18" height="18"/>
+                                         </router-link>
+                                    </td>
+                                    <td style="line-height:12pt; height:10px;">
+                                        <span class="pagetop">
+                                            <b class="hnname">
+                                                <router-link v-bind:to="'/news'" id='Hackernews'>Hacker News</router-link></b>
+                                            <!-- we need to add to context a varible current_page -->
+                                            | <router-link v-bind:to="'/newest'">News</router-link>    
+                                            | <router-link v-bind:to="'/ask'" >Ask</router-link>
+                                            | <router-link v-bind:to="'/threads?username='+ user.username" v-if="haveToken">Threads</router-link>
+                                            | <router-link v-bind:to="'/submit'">Submit</router-link>
+                                            <!-- <a style ="color:azure"  href=""> username's submissions</a> -->
+                                            <!-- | <span style ="color:azure">upvoted</span> -->
+                                            <!-- The comments in the following way should be only show if it's from user different from the one logged in -->
+                                                <!-- | <span style ="color:azure"> username's comments </span> -->
+                                        </span>
+                                    </td>
+                                    <td style="text-align:right;padding-right:4px;">
+                                        <span class="pagetop">
+                                            <router-link id="user" v-bind:to="'/user?username=' + user.username">{{user.username}}({{user.karma}})</router-link> 
+                                           |<button v-on:click=logout() id="logout_button"> Log out</button>
+                                           <!-- <router-link v-bind:to="'/login'" v-on:click="logout()" > Log out </router-link> -->
+                                         <!--  -->
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr id="pagespace" title="New Links" style="height:10px"></tr>
+                <tr>
+                    <td>
+                        <table class="itemlist" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                                <router-view/>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr v-if="haveToken">
+                    <td><img src="" height="10" width="0"><table width="100%" cellspacing="0" cellpadding="1"><tbody><tr><td bgcolor="#ff6600"></td></tr></tbody></table><br><center><a href="https://www.ycombinator.com/apply/">
+                    Applications are open for YC Summer 2020
+                      </a></center><br><center><span class="yclinks"><a href="newsguidelines.html">Guidelines</a>
+                    | <a href="newsfaq.html">FAQ</a>
+                    | <a href="mailto:hn@ycombinator.com">Support</a>
+                    | <a href="https://github.com/HackerNews/API">API</a>
+                    | <a href="security.html">Security</a>
+                    | <a href="lists">Lists</a>
+                    | <a href="bookmarklet.html" rel="nofollow">Bookmarklet</a>
+                    | <a href="http://www.ycombinator.com/legal/">Legal</a>
+                    | <a href="http://www.ycombinator.com/apply/">Apply to YC</a>
+                    | <a href="mailto:hn@ycombinator.com">Contact</a></span><br><br><form method="get" action="//hn.algolia.com/">Search:
+                    <input type="text" name="q" value="" size="17" autocorrect="off" spellcheck="false" autocapitalize="off" autocomplete="false"></form>
+                    </center></td>
+                </tr>
+            </tbody>
+        </table>
+    </center>
+</div>
+</template>
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-//import newest from './components/newest.vue'
+let token = localStorage.getItem('vue-authenticate.vueauth_token');
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: 'app',
+  computed: {
+      haveToken() {
+        // token = null;
+        return token != null;
+      }
+  },
+  data(){
+    return{
+      user:{
+        username:'userprove',
+        karma: 1
+      }
+    }
+  },
+  methods:{
+    logout(){
+        console.log("Borroooooooooooooooooooooooooooooooooooooooo");
+        localStorage.removeItem('vue-authenticate.vueauth_token');
+        window.location.href = '/login';
+    },
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style> -->
-<template>
-  <div class="container">
-    <router-view ></router-view>
-    <p>"fadosfnoain"</p>
-  </div>
-</template>
-<script>
-export default{
-}
-</script>
-<style lang="scss">
+    header a.router-link-exact-active {
+    color: #fff;
+    font-weight: 400;
+    }
+    header a:hover {
+    color: #fff;
+    }
+    #logout_button {
+
+        background-color: Transparent;
+        background-repeat:no-repeat;
+        border: none;
+        cursor:pointer;
+        overflow: hidden;
+        outline:none;
+    }
+    @import './assets/CSS/style.css';
 </style>
+
+<!-- <script src="{{ STATIC_URL }}/static/js/vote.js"></script> -->

@@ -40,7 +40,7 @@ export const authMixin = {
             this.$auth.authenticate(provider, {provider: "google-oauth2"}).then(function (response) {
                     console.log(response.data);
                     console.log("Works!");
-                    window.location.href = '/dashboard';
+                    window.location.href = '/';
             }).catch(function(error) {
                 console.log(error);
             });

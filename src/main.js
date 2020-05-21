@@ -15,7 +15,7 @@ import VueAuthenticate from 'vue-authenticate'
 import VueAxios from 'vue-axios'
 import axios from 'axios';
 import { store } from './store/store'
-import { authMixin } from './mixins/authMixin';
+// import { authMixin } from './mixins/authMixin';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
@@ -36,12 +36,15 @@ const router = new VueRouter({
 });
 let token = localStorage.getItem('vue-authenticate.vueauth_token');
 let isAuthenticated = (token != null);
-
+// isAuthenticated = false
 router.beforeEach( async (to, from,next) => {
+  console.log("Tiene token?")
   console.log(isAuthenticated)
-  console.log(to);
+  console.log("viene de :")
   console.log(from);
-  if (to.name !== 'Login'){
+  console.log("vamos a ")
+  console.log(to);
+  /*if (to.name !== 'Login'){
       if(!isAuthenticated){
         next({ name: 'Login' });
       }
@@ -51,7 +54,8 @@ router.beforeEach( async (to, from,next) => {
       }
       else next();
   }
-  else next();
+  else next();*/
+  next();
 });
 
 new Vue({
