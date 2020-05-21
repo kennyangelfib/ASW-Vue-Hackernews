@@ -1,6 +1,7 @@
 import Home from '@/components/Home';
 import Login from '@/components/Login'
 import Dismiss from '@/components/Dismiss';
+import Newest from '@/components/Newest';
 // import Router from 'vue-router';
 
 
@@ -15,11 +16,6 @@ export const routes = [
         name: 'Dismiss',
         component: Dismiss 
     },
-    // {
-    //     path: '/logout' ,
-    //     name: 'Logout',
-    //     component: Logout 
-    // },
     {
         path: '/' ,
         name: 'Home',
@@ -30,11 +26,11 @@ export const routes = [
         name: 'News',
         component: Home
     },
-    // {
-    //     path: '/newest' ,
-    //     name: 'Newest',
-    //     component: Newest 
-    // },
+    {
+        path: '/newest' ,
+        name: 'Newest',
+        component: Newest 
+    },
     // {
     //     path: '/ask' ,
     //     name: 'Ask',

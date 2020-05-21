@@ -1,27 +1,3 @@
-// import axios from 'axios';
-// export const authMixin = {
-//     methods: {
-//         checkToken: function(redirect){
-//             console.log(redirect);
-//             axios.post("http://localhost:8000/api/check/", {"token": localStorage.getItem("vue-authenticate.vueauth_token")}).then((response) => {
-//             console.log(response.data)
-//                 if (!response.data.status) window.location.href = '/';//redirect({ path: path })
-//             }).catch((error) => {
-//                     console.log(error);
-//             });
-//         },
-//         authenticate: function(provider) {
-//             this.$auth.authenticate(provider, {provider: "google-oauth2"}).then(function (response) {
-//                     console.log(response.data);
-//                     console.log("Works!");
-//                     window.location.href = '/dashboard';
-//             }).catch(function(error) {
-//                 console.log(error);
-//             });
-//         }
-//     }
-// }
-
 import axios from 'axios';
 export const authMixin = {
     methods: {
@@ -39,7 +15,7 @@ export const authMixin = {
         authenticate: function(provider) {
             this.$auth.authenticate(provider, {provider: "google-oauth2"}).then(function (response) {
                     console.log(response.data);
-                    console.log("Works!");
+                    console.log("Authentication Works!");
                     window.location.href = '/';
             }).catch(function(error) {
                 console.log(error);

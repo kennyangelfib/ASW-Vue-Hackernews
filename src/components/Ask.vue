@@ -1,7 +1,5 @@
 <template>
-{% extends 'base.html' %}
-{% load hackernews_extra %}
-{% block content  %}
+
    {% for contribution in contribution_list %}
        <tr class="athing" id="{{contribution.pk}}">
            <td align="right" valign="top" class="title"><span class="rank">{{ forloop.counter }}.</span></td>
