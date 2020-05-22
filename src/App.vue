@@ -33,8 +33,9 @@
                                     <td style="text-align:right;padding-right:4px;">
                                         <span class="pagetop">
                                             <router-link id="user" v-bind:to="'/user?username=' + user.username">{{user.username}}({{user.karma}})</router-link> 
-                                           |<button v-on:click=logout() id="logout_button"> Log out</button>
-                                           <!-- <router-link v-bind:to="'/login'" v-on:click="logout()" > Log out </router-link> -->
+                                           <!-- <router-link :to="{name:'Login'}"> -->
+                                                   | <button v-on:click=logout() id="logout_button"> Log out</button>
+                                           <!-- </router-link> -->
                                          <!--  -->
                                         </span>
                                     </td>
@@ -94,9 +95,8 @@ export default {
   },
   methods:{
     logout(){
-        console.log("Borroooooooooooooooooooooooooooooooooooooooo");
+        console.log("Borro datos del usuario");
         localStorage.removeItem('vue-authenticate.vueauth_token');
-        localStorage.removeItem('OTelJS.ClientId');
         localStorage.removeItem('username');
         window.location.href = '/login';
     },

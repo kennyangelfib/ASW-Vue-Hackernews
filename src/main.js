@@ -1,12 +1,3 @@
-// import Vue from 'vue'
-// import App from './App.vue'
-
-// Vue.config.productionTip = false
-
-// new Vue({
-//   render: h => h(App),
-// }).$mount('#app')
-
 import Vue from 'vue'
 import VueRouter from 'vue-router';
 import App from './App.vue'
@@ -44,18 +35,24 @@ router.beforeEach( async (to, from,next) => {
   console.log(from);
   console.log("vamos a ")
   console.log(to);
-  // if (to.name !== 'Login'){
-  //     if(!isAuthenticated){
-  //       next({ name: 'Login' });
-  //     }
-  //     else if(!(await authMixin.methods.checkToken("google"))) {
-  //         console.log("Ohh token invalido, hacemos login");
-  //         next({ name: 'Login' });
-  //     }
-  //     else next();
-  // }
-  // else next();
-   next();
+  if(from.path == '/' && to.name=='Home'){
+    if(!isAuthenticated && localStorage.getItem("Auth_state") !== "PROCESS"){
+      console.log("uh nononono you must go log in first");
+      return next({ name: 'Login' });
+    }
+    console.log("Despues de login si vamos a Home")
+    return next();
+  }
+  if (to.name !== 'Login'){
+      console.log(`Nos dirigimos a ${to.name}`)
+    if(!isAuthenticated){
+        console.log("You are not authenticated, you will be redirect to login");
+        return next({ name: 'Login' });
+    }
+    console.log(`OK puedes ir a ${to.name}`)
+    return next();
+  }
+  else return next();
 });
 
 new Vue({
