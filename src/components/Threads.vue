@@ -80,7 +80,7 @@ export default {
     data(){
         return{
             user:{
-                username: localStorage.getItem('username'),
+                username:'kenny.angel.alejandro',
                 karma: 1
             },
             contribution_list: []
@@ -95,7 +95,7 @@ export default {
             return moment(date).fromNow();
         },
         getContributionsAsk (){
-            console.log("IncontributionsAsK")
+            console.log("IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
             let config = {
                 headers: {
                     Authorization: 'J56g50Vu.zX5Ax15Z7MJ1am1npKRhc7bzxLSznPa1',
@@ -105,7 +105,7 @@ export default {
             axios.get(
                 "http://localhost:8000/api/asks",config
             ).then(response => {
-                console.log("It went Ok")
+                console.log("It went Ok----------------------------------------")
                 //console.log(response.data);
                 this.contribution_list = response.data;
             }).catch((error) => {

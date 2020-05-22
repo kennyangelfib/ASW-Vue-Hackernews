@@ -87,15 +87,17 @@ export default {
   data(){
     return{
       user:{
-        username:'userprove',
+        username: localStorage.getItem('username'),
         karma: 1
-      }
+      },
     }
   },
   methods:{
     logout(){
         console.log("Borroooooooooooooooooooooooooooooooooooooooo");
         localStorage.removeItem('vue-authenticate.vueauth_token');
+        localStorage.removeItem('OTelJS.ClientId');
+        localStorage.removeItem('username');
         window.location.href = '/login';
     },
   },

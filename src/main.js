@@ -15,11 +15,11 @@ import VueAuthenticate from 'vue-authenticate'
 import VueAxios from 'vue-axios'
 import axios from 'axios';
 import { store } from './store/store'
-import { authMixin } from './mixins/authMixin';
+// import { authMixin } from './mixins/authMixin';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
-  // baseUrl: 'http://localhost:8000',
+  baseUrl: 'http://localhost:8000',
   storageType: 'localStorage',
   tokenPath: 'token',
   providers: {
@@ -44,18 +44,18 @@ router.beforeEach( async (to, from,next) => {
   console.log(from);
   console.log("vamos a ")
   console.log(to);
-  if (to.name !== 'Login'){
-      if(!isAuthenticated){
-        next({ name: 'Login' });
-      }
-      else if(!(await authMixin.methods.checkToken("google"))) {
-          console.log("Ohh token invalido, hacemos login");
-          next({ name: 'Login' });
-      }
-      else next();
-  }
-  else next();
-  // next();
+  // if (to.name !== 'Login'){
+  //     if(!isAuthenticated){
+  //       next({ name: 'Login' });
+  //     }
+  //     else if(!(await authMixin.methods.checkToken("google"))) {
+  //         console.log("Ohh token invalido, hacemos login");
+  //         next({ name: 'Login' });
+  //     }
+  //     else next();
+  // }
+  // else next();
+   next();
 });
 
 new Vue({

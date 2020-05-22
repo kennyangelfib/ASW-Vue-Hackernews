@@ -16,6 +16,7 @@ export const authMixin = {
             this.$auth.authenticate(provider, {provider: "google-oauth2"}).then(function (response) {
                     console.log(response.data);
                     console.log("Authentication Works!");
+                    localStorage.setItem("username",response.data.username);
                     window.location.href = '/';
             }).catch(function(error) {
                 console.log(error);
