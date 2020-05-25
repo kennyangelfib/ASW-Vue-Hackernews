@@ -3,6 +3,7 @@ import Login from '@/components/Login'
 import Dismiss from '@/components/Dismiss';
 import Ask from '@/components/Ask';
 import Newest from '@/components/Newest';
+import User from '@/components/User';
 // import Router from 'vue-router';
 
 export const routes = [
@@ -41,11 +42,11 @@ export const routes = [
     //     name: 'Threads',
     //     component: Threads
     // },
-    // {
-    //     path: '/user',
-    //     name: 'User',
-    //     component: User
-    // },
+    {
+         path: '/user',
+         name: 'User',
+        component: User
+     },
     // {
     //     path: '/submit',
     //     name: 'Submit',
