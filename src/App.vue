@@ -76,6 +76,7 @@
 </div>
 </template>
 <script>
+// import {apitools} from "./mixins/apitools"
 let token = localStorage.getItem('vue-authenticate.vueauth_token');
 export default {
   name: 'app',
@@ -89,7 +90,7 @@ export default {
     return{
       user:{
         username: localStorage.getItem('username'),
-        karma: 1
+        karma: 1,
       },
     }
   },
@@ -98,6 +99,7 @@ export default {
         console.log("Borro datos del usuario");
         localStorage.removeItem('vue-authenticate.vueauth_token');
         localStorage.removeItem('username');
+        localStorage.removeItem('id');
         window.location.href = '/login';
     },
   },
