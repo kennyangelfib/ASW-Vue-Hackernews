@@ -79,12 +79,13 @@
 
 <script>
 import axios from "axios";
+import apitools from "../mixins/apitools.js";
 export default {
     name: 'Newest',
     data(){
         return{
             user:{
-                username:'kenny.angel.alejandro',
+                username: localStorage.getItem('username'),
                 karma: 1
             },
             contribution_list: []
@@ -99,28 +100,23 @@ export default {
             return moment(date).fromNow();
         },
         getContributionsAskUrl (){
-            console.log("IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
             let config = {
                 headers: {
-                    Authorization: 'J56g50Vu.zX5Ax15Z7MJ1am1npKRhc7bzxLSznPa1',
+                    Authorization: apitools.getApikey()
                 }
             }
-            // For now we are authentication with a provisional APIkey
             axios.get(
                 "http://localhost:8000/api/home",config
             ).then(response => {
-                console.log("It went Ok----------------------------------------")
-                //console.log(response.data);
                 this.contribution_list = response.data;
             }).catch((error) => {
                     console.log(error);
             });
         },
-    },    
+    },  
     mounted () {
         this.getContributionsAskUrl();
     }
-    
 };
 
 </script>

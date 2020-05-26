@@ -72,6 +72,7 @@
 </template>
 <script>
 //import VueJwtDecode from 'vue-jwt-decode';
+import apitools from "../mixins/apitools.js";
 import axios from "axios";
 export default {
     name: 'Ask',
@@ -95,10 +96,9 @@ export default {
             return moment(date).fromNow();
         },
         getContributionsAsk (){
-            console.log("IncontributionsAsK")
             let config = {
                 headers: {
-                    Authorization: 'J56g50Vu.zX5Ax15Z7MJ1am1npKRhc7bzxLSznPa1',
+                    Authorization:  apitools.getApikey(),
                 }
             }
             // For now we are authentication with a provisional APIkey
