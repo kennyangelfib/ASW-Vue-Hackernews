@@ -9,18 +9,13 @@
                             <font color="#ff6600" >*</font>
                             <img height="1" width="14">
                         </span>
-                        <span v-else>
-                            <button class="votearrow"/>
-                        </span>    
                    <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- <span v-else-if="">
-                                {% if contribution.id_contribution not in voted %}
-                                    <button class="votearrow" id="vote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% else %}
-                                    <button class="votearrowhidden" id="votehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% endif %}
+                            <span v-else-if="!contribution_list[index-1].uservotes.includes(user.username)">
+                                    <button class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, 1)" ></button>
                             </span>
-                            {% endif %} -->
+                            <span v-else>
+                                    <button class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, 2)"></button>
+                            </span>
                     </center>
                 </td>
                 <td class="title">
@@ -47,17 +42,20 @@
                         <!-- <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished("2020-05-06T18:05:21.582592")}} </a> | -->
                         <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished(contribution_list[index-1].creation_date)}} </a> |
                     </span>  
-                    <span v-if="contribution_list[index-1].author == user.username"> 
+                    <span v-if="contribution_list[index-1].author == user.username">
+
                         <a :href="'/edit?id='+ contribution_list[index-1].id_contribution">edit</a> |
                         <a :href="'/delete-confirm?id='+ contribution_list[index-1].id_contribution">delete</a>
                     </span>
-                    <span v-else> 
+                    <span v-else>
+
                         <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- {% if contribution.id_contribution in voted %} 
-                            <button class="unvote" id="unvote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button> 
-                            {% else %}
-                        <button class="unvotehidden" id="unvotehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button>
-                        {% endif %} -->
+                            <span v-if="contribution_list[index-1].uservotes.includes(user.username)">
+                            <button class="unvote" v-bind:id="'unvote' + contribution_list[index-1].id_contribution">unvote |</button>
+                            </span>
+                            <span v-else>
+                            <button class="unvotehidden" v-bind:id="'unvote' + contribution_list[index-1].id_contribution">unvote |</button>
+                            </span>
                         <a :href="'/item?id='+ contribution_list[index-1].id_contribution">
                             <span v-if="contribution_list[index-1].comments==0">
                                 discuss
@@ -84,7 +82,7 @@ export default {
     data(){
         return{
             user:{
-                username:'kenny.angel.alejandro',
+                username:'faaraujo88',
                 karma: 1
             },
             contribution_list: []
@@ -98,23 +96,67 @@ export default {
             var moment = require('moment')
             return moment(date).fromNow();
         },
-        getContributionsAskUrl (){
+        getContributionsAskUrl () {
             console.log("IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
             let config = {
                 headers: {
-                    Authorization: 'J56g50Vu.zX5Ax15Z7MJ1am1npKRhc7bzxLSznPa1',
+                    Authorization: 'i4nplFBS.BtRmK5JuBZAEgHdd0KbVCMU5v8BwdGhg',
                 }
             }
             // For now we are authentication with a provisional APIkey
             axios.get(
-                "http://localhost:8000/api/newest",config
+                "http://localhost:8000/api/newest", config
             ).then(response => {
                 console.log("It went Ok----------------------------------------")
                 //console.log(response.data);
                 this.contribution_list = response.data;
             }).catch((error) => {
+                console.log(error);
+            })
+        },
+
+        votecontrib(idcontrib, tipo) {
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                headers: {
+                    Authorization: 'i4nplFBS.BtRmK5JuBZAEgHdd0KbVCMU5v8BwdGhg'
+                }
+            }).then(response => {
+                    console.log("We are voting to contrib" +idcontrib)
+                    console.log(response.data);
+
+                    if(tipo == 1){
+                        $("vote"+idcontrib).hide();
+                        $("unvotehidden"+idcontrib).show();
+                    }
+
+                    if(tipo == 2){
+                        $("votehidden"+idcontrib).hide();
+                        $("unvote"+idcontrib).show();
+                    }
+                }).catch((error) => {
                     console.log(error);
-            });
+                })
+            },
+
+        unvotecontrib() {
+
+            axios({
+                method: 'post',
+                url: '/login',
+                data: {
+                    firstName: 'Finn',
+                    lastName: 'Williams'
+                }.then(response => {
+                    console.log("It went Ok----------------------------------------")
+                    //console.log(response.data);
+                    this.contribution_list = response.data;
+                }).catch((error) => {
+                    console.log(error);
+                })
+            })
         },
     },    
     mounted () {
