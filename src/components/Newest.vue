@@ -10,12 +10,11 @@
                             <img height="1" width="14">
                         </span>
                    <!-- Here should evaluate if it's voted or not by the user -->
-                            <span v-else-if="!contribution_list[index-1].uservotes.includes(user.username)">
-                                    <button class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, 1)" ></button>
-                            </span>
-                            <span v-else>
-                                    <button class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, 2)"></button>
-                            </span>
+
+                                    <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
+
+                                    <button v-else class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)"></button>
+
                     </center>
                 </td>
                 <td class="title">
@@ -50,12 +49,11 @@
                     <span v-else>
 
                         <!-- Here should evaluate if it's voted or not by the user -->
-                            <span v-if="contribution_list[index-1].uservotes.includes(user.username)">
-                            <button class="unvote" v-bind:id="'unvote' + contribution_list[index-1].id_contribution">unvote |</button>
-                            </span>
-                            <span v-else>
-                            <button class="unvotehidden" v-bind:id="'unvote' + contribution_list[index-1].id_contribution">unvote |</button>
-                            </span>
+
+                            <button v-if="contribution_list[index-1].uservotes.includes(user.username)" class="unvote" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
+                            <button v-else class="unvotehidden" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
                         <a :href="'/item?id='+ contribution_list[index-1].id_contribution">
                             <span v-if="contribution_list[index-1].comments==0">
                                 discuss
@@ -115,7 +113,7 @@ export default {
             })
         },
 
-        votecontrib(idcontrib, tipo) {
+        votecontrib(idcontrib, ind,user) {
 
             axios({
                 method: 'post',
@@ -127,35 +125,48 @@ export default {
                     console.log("We are voting to contrib" +idcontrib)
                     console.log(response.data);
 
-                    if(tipo == 1){
-                        $("vote"+idcontrib).hide();
-                        $("unvotehidden"+idcontrib).show();
-                    }
+                    console.log("Beforeeee" +idcontrib)
+                    console.log(this.contribution_list[ind-1].uservotes)
 
-                    if(tipo == 2){
-                        $("votehidden"+idcontrib).hide();
-                        $("unvote"+idcontrib).show();
-                    }
+                    console.log("After" +idcontrib)
+                    console.log(this.contribution_list[ind-1].uservotes.push(user.username))
+                    console.log(this.contribution_list[ind-1].uservotes)
+
+
                 }).catch((error) => {
                     console.log(error);
                 })
             },
 
-        unvotecontrib() {
+        unvotecontrib(idcontrib, ind,user) {
 
             axios({
-                method: 'post',
-                url: '/login',
-                data: {
-                    firstName: 'Finn',
-                    lastName: 'Williams'
-                }.then(response => {
-                    console.log("It went Ok----------------------------------------")
-                    //console.log(response.data);
-                    this.contribution_list = response.data;
-                }).catch((error) => {
-                    console.log(error);
-                })
+                method: 'delete',
+                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                headers: {
+                    Authorization: 'i4nplFBS.BtRmK5JuBZAEgHdd0KbVCMU5v8BwdGhg'
+                }
+            }).then(response => {
+
+                console.log("We are UNvoting to contrib" +idcontrib)
+                console.log(response.data);
+
+                console.log(this.contribution_list[ind-1].uservotes)
+                var index = this.contribution_list[ind-1].uservotes.indexOf(user.username)
+                console.log("index is" +index)
+
+                console.log("Beforeeee" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+
+                if (index > -1) {
+                    this.contribution_list[ind-1].uservotes.splice(index, 1)
+                }
+
+                console.log("After" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+
+            }).catch((error) => {
+                console.log(error);
             })
         },
     },    
