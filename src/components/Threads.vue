@@ -9,18 +9,12 @@
                             <font color="#ff6600" >*</font>
                             <img height="1" width="14">
                         </span>
-                        <span v-else>
-                            <button class="votearrow"/>
-                        </span>    
-                   <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- <span v-else-if="">
-                                {% if contribution.id_contribution not in voted %}
-                                    <button class="votearrow" id="vote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% else %}
-                                    <button class="votearrowhidden" id="votehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% endif %}
-                            </span>
-                            {% endif %} -->
+                        <!-- Here should evaluate if it's voted or not by the user -->
+
+                        <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
+
+                        <button v-else class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)"></button>
+
                     </center>
                 </td>
                 <td class="title">
@@ -46,12 +40,12 @@
                         <a :href="'/delete-confirm?id='+ contribution_list[index-1].id_contribution">delete</a>
                     </span>
                     <span v-else> 
-                        <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- {% if contribution.id_contribution in voted %} 
-                            <button class="unvote" id="unvote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button> 
-                            {% else %}
-                        <button class="unvotehidden" id="unvotehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button>
-                        {% endif %} -->
+                    <!-- Here should evaluate if it's voted or not by the user -->
+
+                            <button v-if="contribution_list[index-1].uservotes.includes(user.username)" class="unvote" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
+                            <button v-else class="unvotehidden" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
                         <a :href="'/item?id='+ contribution_list[index-1].id_contribution">
                             <span v-if="contribution_list[index-1].comments==0">
                                 discuss
@@ -71,49 +65,97 @@
     </span>
 </template>
 <script>
-//import VueJwtDecode from 'vue-jwt-decode';
-import axios from "axios";
-import apitools from "../mixins/apitools.js";
-export default {
-    name: 'Ask',
-    computed:{ 
-    },
-    data(){
-        return{
-            user:{
-                username:'kenny.angel.alejandro',
-                karma: 1
-            },
-            contribution_list: []
-        }
-    },
-    methods:{
-        whenpublished(creation_date){
-            let y = '"'+ creation_date +'"';
-            let dateStr = JSON.parse(y);
-            let date = new Date(dateStr);
-            var moment = require('moment')
-            return moment(date).fromNow();
+    //import VueJwtDecode from 'vue-jwt-decode';
+    import axios from "axios";
+    export default {
+        name: 'Ask',
+        computed:{
         },
-        getContributionsAsk (){
-            let config = {
-                headers: {
-                    Authorization: apitools.getApikey()
-                }
+        data(){
+            return{
+                user:{
+                    username:localStorage.getItem('username'),
+                    karma: 1
+                },
+                contribution_list: []
             }
-            axios.get(
-                "http://localhost:8000/api/asks",config
-            ).then(response => {
-                this.contribution_list = response.data;
-            }).catch((error) => {
+        },
+        methods:{
+            whenpublished(creation_date){
+                let y = '"'+ creation_date +'"';
+                let dateStr = JSON.parse(y);
+                let date = new Date(dateStr);
+                var moment = require('moment')
+                return moment(date).fromNow();
+            },
+            getContributionsAsk (){
+                console.log("IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
+                let config = {
+                    headers: {
+                        Authorization: apitools.getApikey(),
+                    }
+                }
+                // For now we are authentication with a provisional APIkey
+                axios.get(
+                    "http://localhost:8000/api/asks",config
+                ).then(response => {
+                    console.log("It went Ok----------------------------------------")
+                    //console.log(response.data);
+                    this.contribution_list = response.data;
+                }).catch((error) => {
                     console.log(error);
-            });
+                });
+            },
+            votecontrib(idcontrib, ind,user) {
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    headers: {
+                        Authorization: apitools.getApikey(),
+                    }
+                }).then(response => {
+                    console.log("We are voting to contrib" +idcontrib)
+                    console.log(response.data);
+                    console.log("Beforeeee" +idcontrib)
+                    console.log(this.contribution_list[ind-1].uservotes)
+                    console.log("After" +idcontrib)
+                    console.log(this.contribution_list[ind-1].uservotes.push(user.username))
+                    console.log(this.contribution_list[ind-1].uservotes)
+                    ++this.contribution_list[ind-1].points
+                }).catch((error) => {
+                    console.log(error);
+                })
+            },
+            unvotecontrib(idcontrib, ind,user) {
+                axios({
+                    method: 'delete',
+                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    headers: {
+                        Authorization: apitools.getApikey(),
+                    }
+                }).then(response => {
+                    console.log("We are UNvoting to contrib" +idcontrib)
+                    console.log(response.data);
+                    console.log(this.contribution_list[ind-1].uservotes)
+                    var index = this.contribution_list[ind-1].uservotes.indexOf(user.username)
+                    console.log("index is" +index)
+                    console.log("Beforeeee" +idcontrib)
+                    console.log(this.contribution_list[ind-1].uservotes)
+                    if (index > -1) {
+                        this.contribution_list[ind-1].uservotes.splice(index, 1)
+                    }
+                    --this.contribution_list[ind-1].points
+                    console.log("After" +idcontrib)
+                    console.log(this.contribution_list[ind-1].uservotes)
+                }).catch((error) => {
+                    console.log(error);
+                })
+            }
+        },
+        mounted(){
+            this.getContributionsAsk();
         }
-    },
-    mounted(){
-        this.getContributionsAsk();
     }
-}
 </script>
 <style>
     @import '../assets/CSS/style.css';

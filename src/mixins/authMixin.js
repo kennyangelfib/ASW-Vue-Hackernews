@@ -20,10 +20,13 @@ export const authMixin = {
             this.$auth.authenticate(provider, {provider: "google-oauth2"}).then(function (response) {
                     console.log("Authentication Works!");
                     localStorage.setItem("username",response.data.username.toString());
-                    localStorage.setItem("id",response.data.id.toString());
+
+                    localStorage.setItem("id",JSON.stringify(response.data.id));
                     localStorage.removeItem("Auth_state");
                     window.location.href = '/';
             }).catch(function(error) {
+                localStorage.removeItem("Auth_state");
+
                 console.log(error);
             });
         }

@@ -9,18 +9,12 @@
                             <font color="#ff6600" >*</font>
                             <img height="1" width="14">
                         </span>
-                        <span v-else>
-                            <button class="votearrow"/>
-                        </span>    
-                   <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- <span v-else-if="">
-                                {% if contribution.id_contribution not in voted %}
-                                    <button class="votearrow" id="vote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% else %}
-                                    <button class="votearrowhidden" id="votehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% endif %}
-                            </span>
-                            {% endif %} -->
+
+                        <!-- Here should evaluate if it's voted or not by the user -->
+                                    <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
+
+                                    <button v-else class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)"></button>
+
                     </center>
                 </td>
                 <td class="title">
@@ -53,11 +47,10 @@
                     </span>
                     <span v-else> 
                         <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- {% if contribution.id_contribution in voted %} 
-                            <button class="unvote" id="unvote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button> 
-                            {% else %}
-                        <button class="unvotehidden" id="unvotehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button>
-                        {% endif %} -->
+                            <button v-if="contribution_list[index-1].uservotes.includes(user.username)" class="unvote" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
+                            <button v-else class="unvotehidden" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
                         <a :href="'/item?id='+ contribution_list[index-1].id_contribution">
                             <span v-if="contribution_list[index-1].comments==0">
                                 discuss
@@ -102,7 +95,7 @@ export default {
         getContributionsAskUrl (){
             let config = {
                 headers: {
-                    Authorization: apitools.getApikey()
+                    Authorization: apitools.getApikey(),
                 }
             }
             axios.get(
@@ -113,9 +106,57 @@ export default {
                     console.log(error);
             });
         },
+
+        votecontrib(idcontrib, ind,user) {
+            axios({
+                method: 'post',
+                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                headers: {
+                    Authorization: apitools.getApikey(),
+                }
+            }).then(response => {
+                console.log("We are voting to contrib" +idcontrib)
+                console.log(response.data);
+                console.log("Beforeeee" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+                console.log("After" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes.push(user.username))
+                console.log(this.contribution_list[ind-1].uservotes)
+                ++this.contribution_list[ind-1].points
+            }).catch((error) => {
+                console.log(error);
+            })
+        },
+        unvotecontrib(idcontrib, ind,user) {
+            axios({
+                method: 'delete',
+                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                headers: {
+                    Authorization: apitools.getApikey(),
+                }
+            }).then(response => {
+                console.log("We are UNvoting to contrib" +idcontrib)
+                console.log(response.data);
+                console.log(this.contribution_list[ind-1].uservotes)
+                var index = this.contribution_list[ind-1].uservotes.indexOf(user.username)
+                console.log("index is" +index)
+                console.log("Beforeeee" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+                if (index > -1) {
+                    this.contribution_list[ind-1].uservotes.splice(index, 1)
+                }
+                --this.contribution_list[ind-1].points
+                console.log("After" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+            }).catch((error) => {
+                console.log(error);
+            })
+        },
     },  
     mounted () {
         this.getContributionsAskUrl();
+        //this.votecontrib();
+        //this.unvotecontrib();
     }
 };
 
