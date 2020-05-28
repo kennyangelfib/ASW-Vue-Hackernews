@@ -132,6 +132,8 @@ export default {
                     console.log(this.contribution_list[ind-1].uservotes.push(user.username))
                     console.log(this.contribution_list[ind-1].uservotes)
 
+                    ++this.contribution_list[ind-1].points
+
 
                 }).catch((error) => {
                     console.log(error);
@@ -161,6 +163,8 @@ export default {
                 if (index > -1) {
                     this.contribution_list[ind-1].uservotes.splice(index, 1)
                 }
+
+                --this.contribution_list[ind-1].points
 
                 console.log("After" +idcontrib)
                 console.log(this.contribution_list[ind-1].uservotes)

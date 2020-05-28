@@ -13,14 +13,11 @@
                             <button class="votearrow"/>
                         </span>    
                    <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- <span v-else-if="">
-                                {% if contribution.id_contribution not in voted %}
-                                    <button class="votearrow" id="vote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% else %}
-                                    <button class="votearrowhidden" id="votehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% endif %}
-                            </span>
-                            {% endif %} -->
+                                    <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
+
+                                    <button v-else class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)"></button>
+
+
                     </center>
                 </td>
                 <td class="title">
@@ -47,11 +44,10 @@
                     </span>
                     <span v-else> 
                         <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- {% if contribution.id_contribution in voted %} 
-                            <button class="unvote" id="unvote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button> 
-                            {% else %}
-                        <button class="unvotehidden" id="unvotehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'>unvote |</button>
-                        {% endif %} -->
+                            <button v-if="contribution_list[index-1].uservotes.includes(user.username)" class="unvote" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
+                            <button v-else class="unvotehidden" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
+
                         <a :href="'/item?id='+ contribution_list[index-1].id_contribution">
                             <span v-if="contribution_list[index-1].comments==0">
                                 discuss
