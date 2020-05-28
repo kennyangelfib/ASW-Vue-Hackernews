@@ -1,16 +1,13 @@
 <template>
-  <tr>
+  <tr v-if="getUrlparams()==user.username">
     <td>
+      {{ searched ? '' : getProfileInfo(user.username) }}
+      {{searched ? '': searched=true}}
       <table class="itemlist" cellspacing="0" cellpadding="0" border="0">
         <tbody>
           <tr>
             <td>
-              <form >
-                <input
-                  type="hidden"
-                  name="csrfmiddlewaretoken"
-                  value="IAVjup6HQxGj4n1rhiZ8TYYBetHIUsOouchMUPwl2j091AOnayyFWN3Qmv0nllMg"
-                />
+              <form action="">
                 <table border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
@@ -54,13 +51,20 @@
                         <label for="id_about">About:</label>
                       </td>
                       <td>
-                        <textarea name="id_about_" cols="40" rows="10" maxlength="500" id="id_about_" v-model="user_info.about" />
+                        <textarea
+                          cols="40"
+                          rows="10"
+                          maxlength="500"
+                          id="id_about_"
+                          v-model="user_info.about"
+                        />
+                        <input type="hidden" name="username" :value="user.username" />
                       </td>
                     </tr>
 
                     <tr>
                       <td valign="top">API Key:</td>
-                      <td>RkC1s7tZ.NALtij3kDJInbTSJaQiXyVslWhQJBMi7</td>
+                      <td>0AybBTtF.DEPlrYQmMtvA7rUDluh9l8TihvbryNPU</td>
                     </tr>
 
                     <tr>
@@ -98,7 +102,7 @@
                     <tr>
                       <td>
                         <br />
-                        <input type="submit" value="update" v-on:click="updateAbout()"/>
+                        <input type="submit" value="update" v-on:click="updateAbout()" />
                       </td>
                     </tr>
 
@@ -111,6 +115,65 @@
                   </tbody>
                 </table>
               </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  <tr v-else>
+    <td>{{getProfileInfo(getUrlparams())}}
+      <table class="itemlist" cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+          <tr>
+            <td>
+              <table border="0">
+                <tbody>
+                  <tr class="athing">
+                    <td valign="top">user:</td>
+                    <td timestamp="1576632256">
+                      <a href class="hnuser">{{user_info.username}}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top">created:</td>
+                    <td>
+                      <a href>{{whenpublished(user_info.created)}}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top">karma:</td>
+                    <td>{{user_info.karma}}</td>
+                  </tr>
+                  <tr>
+                    <td valign="top">about:</td>
+                    <td>{{user_info.about}}</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <a href="submitted?id=kennyangelsystem">
+                        <u>submissions</u>
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>
+                      <a href="threads?id=kennyangelsystem">
+                        <u>comments</u>
+                      </a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <br />
             </td>
           </tr>
         </tbody>
@@ -130,24 +193,25 @@ export default {
         username: localStorage.getItem("username"),
         karma: 1
       },
-      user_info: []
+      user_info: [],
+      searched : Boolean,
     };
   },
 
   methods: {
-    getProfileInfo() {
+    getProfileInfo(user) {
       console.log(
         "IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"
       );
       let config = {
         headers: {
-          Authorization: "RkC1s7tZ.NALtij3kDJInbTSJaQiXyVslWhQJBMi7"
+          Authorization: "0AybBTtF.DEPlrYQmMtvA7rUDluh9l8TihvbryNPU"
         }
       };
       // For now we are authentication with a provisional APIkey
       axios
         .get(
-          "https://hackers-asw.herokuapp.com/api/profile/adrianromaniglesias",
+          `https://hackers-asw.herokuapp.com/api/profile/${user}`,
           config
         )
         .then(response => {
@@ -160,40 +224,52 @@ export default {
         });
     },
     updateAbout() {
-        let about =  document.getElementById("id_about_").value
-         let config = {
+      let about = document.getElementById("id_about_").value;
+      let config = {
         headers: {
-          Authorization: "RkC1s7tZ.NALtij3kDJInbTSJaQiXyVslWhQJBMi7"
+          Authorization: "0AybBTtF.DEPlrYQmMtvA7rUDluh9l8TihvbryNPU"
         }
       };
       // For now we are authentication with a provisional APIkey
       axios
         .put(
-          "https://hackers-asw.herokuapp.com/api/profile/adrianromaniglesias",{"about" : `${about}` },
+          "https://hackers-asw.herokuapp.com/api/profile/adrianromaniglesias",
+          { about: `${about}` },
           config
         )
         .then(response => {
           console.log("It went okUSER");
           console.log(response.data);
           this.user_info = response.data;
+          
         })
         .catch(error => {
           console.log(error);
         });
+    },
+    whenpublished(creation_date) {
+      let y = '"' + creation_date + '"';
+      let dateStr = JSON.parse(y);
+      let date = new Date(dateStr);
+      var moment = require("moment");
+      return moment(date).fromNow();
+    },
+    getUrlparams() {
+      let url = new URL(window.location.href);
+      console.log("hola")
+      if(url.searchParams.get("username") == null){
+      return url.searchParams.get("id")
+      }
 
+      return url.searchParams.get("username");
 
     },
-    whenpublished(creation_date){
-            let y = '"'+ creation_date +'"';
-            let dateStr = JSON.parse(y);
-            let date = new Date(dateStr);
-            var moment = require('moment')
-            return moment(date).fromNow();
-        }
+    getOtherProfile(){}
   },
 
   mounted() {
-    this.getProfileInfo();
+    //this.getProfileInfo(this.user.username);
+    this.searched = false;
   }
 };
 </script>

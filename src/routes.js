@@ -4,6 +4,7 @@ import Dismiss from '@/components/Dismiss';
 import Ask from '@/components/Ask';
 import Newest from '@/components/Newest';
 import User from '@/components/User';
+import Item from '@/components/Item'
 // import Router from 'vue-router';
 
 export const routes = [
@@ -52,11 +53,11 @@ export const routes = [
     //     name: 'Submit',
     //     component: Submit
     // },
-    // {
-    //     path: '/item',
-    //     name: 'Item',
-    //     component: Item
-    // }
+     {
+         path: '/item',
+         name: 'Item',
+         component: Item
+     }
 ];
 
 //  export default routes;
