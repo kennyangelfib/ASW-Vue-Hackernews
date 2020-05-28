@@ -3,6 +3,8 @@ import Login from '@/components/Login'
 import Dismiss from '@/components/Dismiss';
 import Ask from '@/components/Ask';
 import Newest from '@/components/Newest';
+import Submit from '@/components/Submit';
+import Submission from '@/components/Submission';
 // import Router from 'vue-router';
 
 export const routes = [
@@ -46,11 +48,16 @@ export const routes = [
     //     name: 'User',
     //     component: User
     // },
-    // {
-    //     path: '/submit',
-    //     name: 'Submit',
-    //     component: Submit
-    // },
+    {
+        path: '/submit',
+        name: 'Submit',
+        component: Submit
+    },
+    {
+        path: '/submitted',
+        name: 'Submission',
+        component: Submission
+    },
     // {
     //     path: '/item',
     //     name: 'Item',
