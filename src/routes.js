@@ -3,6 +3,8 @@ import Login from '@/components/Login'
 import Dismiss from '@/components/Dismiss';
 import Ask from '@/components/Ask';
 import Newest from '@/components/Newest';
+import UpvotedComments from '@/components/UpvotedComments';
+
 // import Router from 'vue-router';
 
 export const routes = [
@@ -36,6 +38,12 @@ export const routes = [
         name: 'Ask',
         component: Ask 
     },
+    {
+        path: '/upvoted' ,
+        name: 'UpvotedComments',
+        component: UpvotedComments
+
+    }
     // {
     //     path: '/threads' ,
     //     name: 'Threads',

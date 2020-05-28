@@ -9,9 +9,7 @@
                             <font color="#ff6600" >*</font>
                             <img height="1" width="14">
                         </span>
-                        <span v-else>
-                            <button class="votearrow"/>
-                        </span>    
+
                    <!-- Here should evaluate if it's voted or not by the user -->
                                     <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
 
@@ -79,7 +77,7 @@ export default {
     data(){
         return{
             user:{
-                username:'kenny.angel.alejandro',
+                username:'faaraujo88',
                 karma: 1
             },
             contribution_list: []
@@ -97,7 +95,7 @@ export default {
             console.log("IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
             let config = {
                 headers: {
-                    Authorization: 'J56g50Vu.zX5Ax15Z7MJ1am1npKRhc7bzxLSznPa1',
+                    Authorization: 'i4nplFBS.BtRmK5JuBZAEgHdd0KbVCMU5v8BwdGhg',
                 }
             }
             // For now we are authentication with a provisional APIkey
@@ -111,6 +109,66 @@ export default {
                     console.log(error);
             });
         },
+        votecontrib(idcontrib, ind,user) {
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                headers: {
+                    Authorization: 'i4nplFBS.BtRmK5JuBZAEgHdd0KbVCMU5v8BwdGhg'
+                }
+            }).then(response => {
+                console.log("We are voting to contrib" +idcontrib)
+                console.log(response.data);
+
+                console.log("Beforeeee" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+
+                console.log("After" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes.push(user.username))
+                console.log(this.contribution_list[ind-1].uservotes)
+
+                ++this.contribution_list[ind-1].points
+
+
+            }).catch((error) => {
+                console.log(error);
+            })
+        },
+
+        unvotecontrib(idcontrib, ind,user) {
+
+            axios({
+                method: 'delete',
+                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                headers: {
+                    Authorization: 'i4nplFBS.BtRmK5JuBZAEgHdd0KbVCMU5v8BwdGhg'
+                }
+            }).then(response => {
+
+                console.log("We are UNvoting to contrib" +idcontrib)
+                console.log(response.data);
+
+                console.log(this.contribution_list[ind-1].uservotes)
+                var index = this.contribution_list[ind-1].uservotes.indexOf(user.username)
+                console.log("index is" +index)
+
+                console.log("Beforeeee" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+
+                if (index > -1) {
+                    this.contribution_list[ind-1].uservotes.splice(index, 1)
+                }
+
+                --this.contribution_list[ind-1].points
+
+                console.log("After" +idcontrib)
+                console.log(this.contribution_list[ind-1].uservotes)
+
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
     },    
     mounted () {
         this.getContributionsAskUrl();
