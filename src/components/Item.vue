@@ -35,7 +35,7 @@
                       <span v-if="url" class="sitebit comhead">
                         (
                         <a :href="contribution.url">
-                          <span class="sitestr">{{contribution.url}}</span>
+                          <span class="sitestr">{{getbasepath(contribution.url)}}</span>
                         </a>)
                       </span>
                       <span v-else class="sitebit comhead">
@@ -131,6 +131,9 @@ export default {
     };
   },
   methods: {
+    getbasepath(url){
+            return url.split('//')[1].split('/')[0]
+        },
     getContributionInfo(id) {
       let config = {
         headers: {

@@ -15,7 +15,7 @@
                     <a :href="contribution.url" class="storylink" rel="nofollow">{{contribution.title}}</a>
                     <span class="sitebit comhead">
                         (<a :href="contribution.url">
-                            <span class="sitestr">{{contribution.url}}</span>
+                            <span class="sitestr">{{getbasepath(Scontribution.url)}}</span>
                         </a>)
                     </span>
                 </span>
@@ -72,6 +72,9 @@ export default {
     };
   },
   methods: {
+    getbasepath(url){
+            return url.split('//')[1].split('/')[0]
+    },
     todelete(decision){
        
         // if(decision != null){

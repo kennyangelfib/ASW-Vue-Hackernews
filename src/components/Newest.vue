@@ -22,7 +22,7 @@
                         <a :href="'/item?id=' + contribution_list[index - 1].id_contribution" class="storylink" rel="nofollow">ASK HN: {{contribution_list[index - 1].title}}</a>
                     </span>
                     <span v-else>
-                        <a :href="contribution_list[index - 1].url">{{contribution_list[index - 1].title}} ({{contribution_list[index - 1].url}})</a>
+                        <a :href="contribution_list[index - 1].url">{{contribution_list[index - 1].title}} ({{getbasepath(contribution_list[index - 1].url)}})</a>
                     </span>
                 </td>
                 
@@ -112,6 +112,9 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
+        },
+        getbasepath(url){
+            return url.split('//')[1].split('/')[0]
         },
 
         votecontrib(idcontrib, ind,user) {
