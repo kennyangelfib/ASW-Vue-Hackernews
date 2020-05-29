@@ -74,7 +74,7 @@
 import axios from "axios";
 import apitools from "../mixins/apitools.js";
 export default {
-    name: 'Newest',
+    name: 'Home',
     data(){
         return{
             user:{
