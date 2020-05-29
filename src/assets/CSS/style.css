@@ -104,27 +104,27 @@ and (max-width : 750px) {
   span.pagetop b { display: block; font-size: 15px; }
   table.comment-tree .comment a { display: inline-block; max-width: 200px; overflow: hidden; white-space: nowrap;
     text-overflow: ellipsis; vertical-align:top; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='40'] { width: 12px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='80'] { width: 24px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='120'] { width: 36px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='160'] { width: 48px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='200'] { width: 60px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='240'] { width: 72px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='280'] { width: 84px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='320'] { width: 96px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='360'] { width: 108px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='400'] { width: 120px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='440'] { width: 132px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='480'] { width: 144px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='520'] { width: 156px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='560'] { width: 168px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='600'] { width: 180px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='640'] { width: 192px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='680'] { width: 204px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='720'] { width: 216px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='760'] { width: 228px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='800'] { width: 240px; }
-  img[src='https://hackernewsfront.herokuapp.com/static/css/base.css'][width='840'] { width: 252px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='40'] { width: 12px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='80'] { width: 24px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='120'] { width: 36px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='160'] { width: 48px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='200'] { width: 60px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='240'] { width: 72px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='280'] { width: 84px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='320'] { width: 96px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='360'] { width: 108px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='400'] { width: 120px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='440'] { width: 132px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='480'] { width: 144px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='520'] { width: 156px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='560'] { width: 168px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='600'] { width: 180px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='640'] { width: 192px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='680'] { width: 204px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='720'] { width: 216px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='760'] { width: 228px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='800'] { width: 240px; }
+  img[src='http://127.0.0.1:8000/static/css/base.css'][width='840'] { width: 252px; }
   .title { font-size: 11pt; line-height: 14pt;  }
   .subtext { font-size: 9pt; }
   .itemlist { padding-right: 5px;}
