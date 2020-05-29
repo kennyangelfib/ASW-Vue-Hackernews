@@ -58,7 +58,7 @@
                           id="id_about_"
                           v-model="user_info.about"
                         />
-                        <input type="hidden" name="username" :value="user.username" />
+                        <input type="hidden" name="id" :value="user.username" />
                       </td>
                     </tr>
 
