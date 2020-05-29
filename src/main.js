@@ -20,7 +20,7 @@ Vue.use(VueAuthenticate, {
   providers: {
     google: {
       clientId:'987660212455-uuo96gos9oerg9bioldf7pgh21rsjjrq.apps.googleusercontent.com',
-      redirectUri: 'http://localhost:8080/',
+      redirectUri: 'https://hackernewsfront.herokuapp.com/',
       url: 'https://hackers-asw.herokuapp.com/api/login/social/token_user/',
     }
   }

@@ -42,7 +42,7 @@
                         <p>
                           <font size="1">
                             <u>
-                              <a v-if="comment.author != user.username" :href="'http://localhost:8080/reply?id='+ comment.contribution_ref +'&idc='+ comment.id_contribution">reply</a>
+                              <a v-if="comment.author != user.username" :href="'https://hackernewsfront.herokuapp.com/reply?id='+ comment.contribution_ref +'&idc='+ comment.id_contribution">reply</a>
                             </u>
                           </font>
                         </p>
