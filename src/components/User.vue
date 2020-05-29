@@ -70,7 +70,7 @@
                     <tr>
                       <td></td>
                       <td>
-                        <a :href="'submitted?id=' + user.username">
+                        <a :href="'/submitted?id=' + user.username">
                           <u>submissions</u>
                         </a>
                       </td>
@@ -78,7 +78,7 @@
                     <tr>
                       <td></td>
                       <td>
-                        <a :href="'threads?id=' + user.username ">
+                        <a :href="'/threads?id=' + user.username ">
                           <u>comments</u>
                         </a>
                       </td>
@@ -152,7 +152,7 @@
                   <tr>
                     <td></td>
                     <td>
-                      <a href="submitted?id=kennyangelsystem">
+                      <a :href="'/submitted?id=' + user_info.username">
                         <u>submissions</u>
                       </a>
                     </td>
@@ -160,7 +160,7 @@
                   <tr>
                     <td></td>
                     <td>
-                      <a href="threads?id=kennyangelsystem">
+                      <a :href="'threads?id=' + user_info.username">
                         <u>comments</u>
                       </a>
                     </td>
