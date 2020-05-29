@@ -1,74 +1,81 @@
 <template>
     <span>
         <div v-for="index in contribution_list.length" :key="index">
-            <tr class="athing">
-                <td align="right" valign="top" class="title"><span class="rank"> {{index}}.</span></td>
-                <td valign="top" class="votelinks">
-                    <center>
-                        <span v-if="contribution_list[index-1].author == user.username" style="text-align=center">
-                            <font color="#ff6600" >*</font>
-                            <img height="1" width="14">
-                        </span>
-                        <!-- Here should evaluate if it's voted or not by the user -->
+            <tr class="athing comtr">
+                <td>
+                <table border="0">
+                    <tbody>
+                        <tr>
+                            <td class="ind"><img height="1" width="0"></td>
+                            <td valign="top" class="votelinks">
+                                <center>
+                                    <span v-if="contribution_list[index-1].author == user.username" style="text-align=center">
+                                        <font color="#ff6600" >*</font>
+                                        <img height="1" width="14">
+                                    </span>
+                                    <!-- Here should evaluate if it's voted or not by the user -->
+                                    <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
 
-                        <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
+                                    <button v-else class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)"></button>
 
-                        <button v-else class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)"></button>
-
-                    </center>
-                </td>
-                <td class="title">
-                <a :href="'/item?id='+ contribution_list[index-1].id_contribution" class="storylink" rel="nofollow">ASK HN: {{contribution_list[index-1].title}}</a>
-                </td>
-            </tr>
-            <!-- <tr class="spacer" style="height:2px"></tr> -->
-            <tr>
-                <td colspan="2"></td>
-                <td class="subtext">
-                    <span class="score">{{contribution_list[index-1].points}} </span>
-                    <span v-if="contribution_list[index-1].points == 1"> point </span> 
-                    <span v-else> points </span>    
-                    by 
-                    <a :href="'/user?id=' + contribution_list[index-1].author"> {{contribution_list[index-1].author}} </a>
-                    <span class="age">
-                        <!-- "2020-05-06T18:05:21.582592" -->
-                        <!-- <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished("2020-05-06T18:05:21.582592")}} </a> | -->
-                        <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished(contribution_list[index-1].creation_date)}} </a> |
-                    </span>  
-                    <span v-if="contribution_list[index-1].author == user.username"> 
-                        <a :href="'/edit?id='+ contribution_list[index-1].id_contribution">edit</a> |
-                        <a :href="'/delete-confirm?id='+ contribution_list[index-1].id_contribution">delete</a>
-                    </span>
-                    <span v-else> 
-                    <!-- Here should evaluate if it's voted or not by the user -->
-
-                            <button v-if="contribution_list[index-1].uservotes.includes(user.username)" class="unvote" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
-
-                            <button v-else class="unvotehidden" v-bind:id="'unvote' + contribution_list[index-1].id_contribution" v-on:click="unvotecontrib(contribution_list[index-1].id_contribution, index, user)">unvote |</button>
-
-                        <a :href="'/item?id='+ contribution_list[index-1].id_contribution">
-                            <span v-if="contribution_list[index-1].comments==0">
-                                discuss
-                            </span>   
-                            <span v-else-if="contribution_list[index-1].comments==1">
-                                1 comment
-                            </span>
-                            <span v-else>
-                                {{contribution_list[index-1].comments }} comments
-                            </span>
-                        </a>   
-                    </span>
+                                </center>
+                            </td>
+                            <td class="default">
+                                <div style="margin-top:2px; margin-bottom:-10px;">
+                                    <span class="comhead">
+                                    <span class="score">{{contribution_list[index-1].points}} </span>
+                                    <span v-if="contribution_list[index-1].points == 1"> point </span> 
+                                    <span v-else> points </span>    
+                                    by 
+                                    <a :href="'/user?id=' + contribution_list[index-1].author"> {{contribution_list[index-1].author}} </a>
+                                    <span class="age">
+                                        <!-- "2020-05-06T18:05:21.582592" -->
+                                        <!-- <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished("2020-05-06T18:05:21.582592")}} </a> | -->
+                                        <a :href="'/item?id='+ contribution_list[index-1].id_contribution"> {{whenpublished(contribution_list[index-1].creation_date)}} </a> |
+                                    </span>  
+                                    <span v-if="contribution_list[index-1].author == user.username"> 
+                                        <a :href="'/edit?id='+ contribution_list[index-1].id_contribution">edit</a> |
+                                        <a :href="'/delete-confirm?id='+ contribution_list[index-1].id_contribution">delete</a>
+                                    </span>
+                                    <span>
+                                        | on: {{contribution_list[index-1].contribution_ref_title}}
+                                    </span>
+                                    
+                                    </span>
+                                </div>
+                                <br>
+                                <div class="comment">
+                                    <span class="commtext c00">{{contribution_list[index-1].text}}</span>
+                                    <div class="reply">
+                                        <p><font size="1">
+                                            </font>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 </td>
             </tr>
-            <tr class="spacer" style="height:10px"></tr>                
+            <table border="0" class="comment-tree">
+                <tbody>
+                  <tree
+                    v-if="contribution_list[index-1].replies &&contribution_list[index-1].replies.length"
+                    :node="contribution_list[index-1].replies"
+                  ></tree>
+                </tbody>
+            </table>
         </div>
     </span>
 </template>
+
 <script>
     //import VueJwtDecode from 'vue-jwt-decode';
+    import apitools from "../mixins/apitools.js";
     import axios from "axios";
     export default {
-        name: 'Ask',
+        name: 'Threads',
         computed:{
         },
         data(){
@@ -88,8 +95,14 @@
                 var moment = require('moment')
                 return moment(date).fromNow();
             },
-            getContributionsAsk (){
-                console.log("IncontributionsAsKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK")
+            getUrlparams() {
+                let url = new URL(window.location.href);
+                console.log("hola");
+                console.log(url.searchParams.get("id"))
+                return url.searchParams.get("id");
+            },
+            getThreads(username){
+                console.log("IncontributionsAsk")
                 let config = {
                     headers: {
                         Authorization: apitools.getApikey(),
@@ -97,7 +110,7 @@
                 }
                 // For now we are authentication with a provisional APIkey
                 axios.get(
-                    "http://localhost:8000/api/asks",config
+                    `http://localhost:8000/api/threads/${username}`,config //falta agregar el path correctp
                 ).then(response => {
                     console.log("It went Ok----------------------------------------")
                     //console.log(response.data);
@@ -151,9 +164,10 @@
                     console.log(error);
                 })
             }
+            
         },
         mounted(){
-            this.getContributionsAsk();
+            this.getThreads(this.getUrlparams());
         }
     }
 </script>

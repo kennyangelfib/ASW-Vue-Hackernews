@@ -17,14 +17,25 @@
                                     </td>
                                     <td style="line-height:12pt; height:10px;">
                                         <span class="pagetop">
-                                            <b class="hnname">
-                                                <router-link v-bind:to="'/news'" id='Hackernews'>Hacker News</router-link></b>
-                                            <!-- we need to add to context a varible current_page -->
-                                            | <router-link v-bind:to="'/newest'">News</router-link>    
-                                            | <router-link v-bind:to="'/ask'" >Ask</router-link>
-                                            | <router-link v-bind:to="'/threads?username='+ user.username" v-if="haveToken">Threads</router-link>
-                                            | <router-link v-bind:to="'/submit'">Submit</router-link>
-                                            <!-- <a style ="color:azure"  href=""> username's submissions</a> -->
+                                            
+                                                <span v-if="currentWindow('submit') == false">
+                                                    <b class="hnname">
+                                                    <router-link v-bind:to="'/news'" id='Hackernews'>Hacker News</router-link>
+                                                    </b>
+                                                <!-- we need to add to context a varible current_page -->
+                                                    | <router-link v-bind:to="'/newest'">News</router-link>    
+                                                    | <router-link v-bind:to="'/ask'" >Ask</router-link>
+                                                    | <router-link v-bind:to="'/threads?username='+ user.username" v-if="haveToken">Threads</router-link> | 
+                                                </span>
+                                                <router-link v-bind:to="'/submit'">Submit</router-link>
+                                                <span v-if="currentWindow('submitted')">
+                                                    <a> | </a>
+                                                    <a style ="color:azure"  href=""> {{id}}'s submissions</a>
+                                                </span>
+                                                <span v-if="currentWindow('upvoted')">
+                                                    <a> | </a>
+                                                    <a style ="color:azure"  href=""> upvoted</a>
+                                                </span>
                                             <!-- | <span style ="color:azure">upvoted</span> -->
                                             <!-- The comments in the following way should be only show if it's from user different from the one logged in -->
                                                 <!-- | <span style ="color:azure"> username's comments </span> -->
@@ -32,7 +43,7 @@
                                     </td>
                                     <td style="text-align:right;padding-right:4px;">
                                         <span class="pagetop">
-                                            <router-link id="user" v-bind:to="'/user?username=' + user.username">{{user.username}}({{user.karma}})</router-link> 
+                                            <router-link id="user" v-bind:to="'/user?id=' + user.username">{{user.username}}({{user.karma}})</router-link> 
                                            <!-- <router-link :to="{name:'Login'}"> -->
                                                    | <button v-on:click=logout() id="logout_button"> Log out</button>
                                            <!-- </router-link> -->
@@ -101,6 +112,15 @@ export default {
         localStorage.removeItem('username');
         localStorage.removeItem('id');
         window.location.href = '/login';
+    },
+    currentWindow(path) {
+        let currentPath = window.location.pathname
+        let current = currentPath.split('/')[1]
+        current = current.split('?')[0]
+        this.id = new URLSearchParams(window.location.search).get('id')
+        if (path == current)
+            return true
+        else return false
     },
   },
   mounted(){

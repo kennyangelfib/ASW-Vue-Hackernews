@@ -6,7 +6,11 @@ import VueAuthenticate from 'vue-authenticate'
 import VueAxios from 'vue-axios'
 import axios from 'axios';
 import { store } from './store/store'
+import tree from './components/Tree.vue'
+import node from './components/Node.vue'
 // import { authMixin } from './mixins/authMixin';
+Vue.component('tree', tree);
+Vue.component('node', node);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
