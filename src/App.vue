@@ -25,7 +25,7 @@
                                                 <!-- we need to add to context a varible current_page -->
                                                     | <router-link v-bind:to="'/newest'">News</router-link>    
                                                     | <router-link v-bind:to="'/ask'" >Ask</router-link>
-                                                    | <router-link v-bind:to="'/threads?username='+ user.username" v-if="haveToken">Threads</router-link> | 
+                                                    | <router-link v-bind:to="'/threads?id='+ user.username" v-if="haveToken">Threads</router-link> | 
                                                 </span>
                                                 <router-link v-bind:to="'/submit'">Submit</router-link>
                                                 <span v-if="currentWindow('submitted')">
