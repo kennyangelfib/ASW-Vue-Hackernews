@@ -5,6 +5,7 @@ import Ask from '@/components/Ask';
 import Newest from '@/components/Newest';
 import Submit from '@/components/Submit';
 import Submission from '@/components/Submission';
+import Upvoted from '@/components/Upvoted';
 // import Router from 'vue-router';
 
 export const routes = [
@@ -57,6 +58,11 @@ export const routes = [
         path: '/submitted',
         name: 'Submission',
         component: Submission
+    },
+    {
+        path: '/upvoted',
+        name: 'Upvoted',
+        component: Upvoted
     },
     // {
     //     path: '/item',

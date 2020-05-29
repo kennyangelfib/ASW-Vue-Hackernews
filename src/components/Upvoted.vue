@@ -8,19 +8,10 @@
                         <span v-if="contribution_list[index-1].author == user.username" style="text-align=center">
                             <font color="#ff6600" >*</font>
                             <img height="1" width="14">
-                        </span>
-                        <span v-else>
-                            <button class="votearrow"/>
-                        </span>    
-                   <!-- Here should evaluate if it's voted or not by the user -->
-                        <!-- <span v-else-if="">
-                                {% if contribution.id_contribution not in voted %}
-                                    <button class="votearrow" id="vote{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% else %}
-                                    <button class="votearrowhidden" id="votehidden{{ contribution.id_contribution }}" likehref='{{ contribution.get_api_like_url }}' userlike='{{ user.pk }}' contid='{{ contribution.id_contribution }}'></button>
-                                {% endif %}
-                            </span>
-                            {% endif %} -->
+                        </span>   
+                        <button v-else-if="!contribution_list[index-1].uservotes.includes(user.username)" class="votearrow" v-bind:id="'vote' + contribution_list[index-1].id_contribution" v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)" ></button>
+                        <button v-else class="votearrowhidden" v-bind:id="'vote' + contribution_list[index-1].id_contribution"  v-on:click="votecontrib(contribution_list[index-1].id_contribution, index, user)"></button>
+
                     </center>
                 </td>
                 <td class="title">
@@ -80,7 +71,7 @@
 import axios from "axios";
 import apitools from "../mixins/apitools.js";
 export default {
-    name: 'Submission',
+    name: 'Upvoted',
     data(){
         return{
             user:{
@@ -103,7 +94,7 @@ export default {
             let myParam = urlParams.get('id');
             // For now we are authentication with a provisional APIkey
             axios.get(
-                "http://127.0.0.1:8000/api/submitted/" + myParam,
+                "http://127.0.0.1:8000/api/upvoted/" + myParam,
                 {
                 headers: {
                     Authorization: apitools.getApikey(),

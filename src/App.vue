@@ -32,6 +32,10 @@
                                                     <a> | </a>
                                                     <a style ="color:azure"  href=""> {{id}}'s submissions</a>
                                                 </span>
+                                                <span v-if="currentWindow('upvoted')">
+                                                    <a> | </a>
+                                                    <a style ="color:azure"  href=""> upvoted</a>
+                                                </span>
                                             <!-- | <span style ="color:azure">upvoted</span> -->
                                             <!-- The comments in the following way should be only show if it's from user different from the one logged in -->
                                                 <!-- | <span style ="color:azure"> username's comments </span> -->

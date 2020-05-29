@@ -36,6 +36,7 @@
 
 <script>
     import axios from "axios";
+    import apitools from "../mixins/apitools.js";
     export default {
         name: 'Submit',
         data() {
@@ -73,7 +74,7 @@
                     },
                     {
                     headers: {
-                        Authorization: '==wcrFmb3FGbzMDMztWYudXYsNzMw0iM',
+                        Authorization: apitools.getApikey(),
                     }
                     }
                 ).then(response => {
@@ -96,7 +97,7 @@
                     },
                     {
                     headers: {
-                        Authorization: '==wcrFmb3FGbzMDMztWYudXYsNzMw0iM',
+                        Authorization: apitools.getApikey(),
                     }
                     }
                 ).then(response => {
