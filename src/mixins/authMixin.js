@@ -2,7 +2,7 @@ import axios from 'axios';
 export const authMixin = {
     methods: {
         checkToken: async function(){
-            let res = await axios.post("http://localhost:8000/api/check/", {"token": localStorage.getItem("vue-authenticate.vueauth_token")
+            let res = await axios.post("https://hackers-asw.herokuapp.com/api/check/", {"token": localStorage.getItem("vue-authenticate.vueauth_token")
             }).then(function (response) {
                 console.log("inside")
                 return response.data.status;

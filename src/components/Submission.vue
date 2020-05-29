@@ -103,7 +103,7 @@ export default {
             let urlParams = new URLSearchParams(window.location.search);
             let myParam = urlParams.get('id');
             axios.get(
-                "http://127.0.0.1:8000/api/submitted/" + myParam,
+                "https://hackers-asw.herokuapp.com/api/submitted/" + myParam,
                 {
                 headers: {
                     Authorization: apitools.getApikey(),

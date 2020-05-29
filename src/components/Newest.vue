@@ -104,7 +104,7 @@ export default {
             }
             // For now we are authentication with a provisional APIkey
             axios.get(
-                "http://localhost:8000/api/newest", config
+                "https://hackers-asw.herokuapp.com/api/newest", config
             ).then(response => {
                 console.log("It went Ok----------------------------------------")
                 //console.log(response.data);
@@ -118,7 +118,7 @@ export default {
 
             axios({
                 method: 'post',
-                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                 headers: {
                     Authorization: apitools.getApikey(),
                 }
@@ -145,7 +145,7 @@ export default {
 
             axios({
                 method: 'delete',
-                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                 headers: {
                     Authorization: apitools.getApikey(),
                 }

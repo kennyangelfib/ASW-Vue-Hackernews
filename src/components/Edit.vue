@@ -135,7 +135,7 @@ export default {
             if (this.form.title.length <= 80) {
                 console.log("--peticion put url--");
                 await axios
-                .put("http://localhost:8000/api/urls/" + this.id_contri, 
+                .put("https://hackers-asw.herokuapp.com/api/urls/" + this.id_contri, 
                     {
                     title: this.form.title,
                     },
@@ -162,7 +162,7 @@ export default {
         }
         else {
             await axios
-            .put("http://localhost:8000/api/asks/" + this.id_contri,
+            .put("https://hackers-asw.herokuapp.com/api/asks/" + this.id_contri,
                 {
                 title: this.form.title,
                 text: this.form.texto,
@@ -199,7 +199,7 @@ export default {
       };
       // For now we are authentication with a provisional APIkey
       axios
-        .get(`http://localhost:8000/api/urls/${id}`, config)
+        .get(`https://hackers-asw.herokuapp.com/api/urls/${id}`, config)
         .then(response => {
           console.log("It went getcontrib");
           console.log(response.data);
@@ -209,7 +209,7 @@ export default {
           console.log(error.status);
 
           axios
-            .get(`http://localhost:8000/api/asks/${id}`, config)
+            .get(`https://hackers-asw.herokuapp.com/api/asks/${id}`, config)
             .then(response => {
               console.log("estic ASKSSS");
               this.url = false;

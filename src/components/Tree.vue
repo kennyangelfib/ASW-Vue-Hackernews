@@ -92,7 +92,7 @@ export default {
     votecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'post',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }
@@ -112,7 +112,7 @@ export default {
             unvotecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'delete',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }

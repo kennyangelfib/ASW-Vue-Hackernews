@@ -14,14 +14,14 @@ Vue.component('node', node);
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios)
 Vue.use(VueAuthenticate, {
-  baseUrl: 'http://localhost:8000',
+  baseUrl: 'https://hackers-asw.herokuapp.com',
   storageType: 'localStorage',
   tokenPath: 'token',
   providers: {
     google: {
       clientId:'987660212455-uuo96gos9oerg9bioldf7pgh21rsjjrq.apps.googleusercontent.com',
       redirectUri: 'http://localhost:8080/',
-      url: 'http://localhost:8000/api/login/social/token_user/',
+      url: 'https://hackers-asw.herokuapp.com/api/login/social/token_user/',
     }
   }
 });

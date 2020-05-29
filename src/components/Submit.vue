@@ -67,7 +67,7 @@ import apitools from '../mixins/apitools';
             if (this.form.url != '') {
                 await axios
                 .post(
-                    "http://127.0.0.1:8000/api/urls",
+                    "https://hackers-asw.herokuapp.com/api/urls",
                     {
                     title: this.form.title,
                     url: this.form.url,
@@ -90,7 +90,7 @@ import apitools from '../mixins/apitools';
             else {
                 await axios
                 .post(
-                    "http://127.0.0.1:8000/api/asks",
+                    "https://hackers-asw.herokuapp.com/api/asks",
                     {
                     title: this.form.title,
                     text: this.form.texto,

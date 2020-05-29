@@ -94,7 +94,7 @@
                     }
                 }
                 axios.get(
-                    `http://localhost:8000/api/upvotedSubmissions/${username}`,config
+                    `https://hackers-asw.herokuapp.com/api/upvotedSubmissions/${username}`,config
                 ).then(response => {
                     console.log(response.data)
                     this.contribution_list = response.data;
@@ -106,7 +106,7 @@
             votecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'post',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }
@@ -126,7 +126,7 @@
             unvotecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'delete',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }

@@ -89,7 +89,7 @@ export default {
                     }
                 };
                 axios
-                .delete(`http://localhost:8000/api/${contrib}/${id}`, config)
+                .delete(`https://hackers-asw.herokuapp.com/api/${contrib}/${id}`, config)
                 .then(response => {
                     console.log("It was deleted");
                     console.log(response.data);
@@ -116,7 +116,7 @@ export default {
       };
       // For now we are authentication with a provisional APIkey
       axios
-        .get(`http://localhost:8000/api/urls/${id}`, config)
+        .get(`https://hackers-asw.herokuapp.com/api/urls/${id}`, config)
         .then(response => {
           console.log("It went getcontrib");
           console.log(response.data);
@@ -126,7 +126,7 @@ export default {
           console.log(error.status);
 
           axios
-            .get(`http://localhost:8000/api/asks/${id}`, config)
+            .get(`https://hackers-asw.herokuapp.com/api/asks/${id}`, config)
             .then(response => {
               console.log("estic ASKSSS");
               this.url = false;

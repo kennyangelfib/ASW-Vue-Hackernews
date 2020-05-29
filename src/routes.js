@@ -1,6 +1,5 @@
 import Home from '@/components/Home';
 import Login from '@/components/Login'
-import Dismiss from '@/components/Dismiss';
 import Ask from '@/components/Ask';
 import Newest from '@/components/Newest';
 import Threads from '@/components/Threads';
@@ -22,12 +21,7 @@ export const routes = [
         name: 'Login',
         component: Login 
     },
-    {   
-        path: '/dismiss',
-        name: 'Dismiss',
-        component: Dismiss 
-    },
-    {
+     {
         path: '/' ,
         name: 'Home',
         component: Home 

@@ -99,7 +99,7 @@ export default {
                 }
             }
             axios.get(
-                "http://localhost:8000/api/home",config
+                "https://hackers-asw.herokuapp.com/api/home",config
             ).then(response => {
                 this.contribution_list = response.data;
             }).catch((error) => {
@@ -110,7 +110,7 @@ export default {
         votecontrib(idcontrib, ind,user) {
             axios({
                 method: 'post',
-                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                 headers: {
                     Authorization: apitools.getApikey(),
                 }
@@ -130,7 +130,7 @@ export default {
         unvotecontrib(idcontrib, ind,user) {
             axios({
                 method: 'delete',
-                url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                 headers: {
                     Authorization: apitools.getApikey(),
                 }

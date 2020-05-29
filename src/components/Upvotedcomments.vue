@@ -96,7 +96,7 @@
                     }
                 }
                 axios.get(
-                    `http://localhost:8000/api/upvotedComments/${username}`,config
+                    `https://hackers-asw.herokuapp.com/api/upvotedComments/${username}`,config
                 ).then(response => {
                     this.contribution_list = response.data;
                 }).catch((error) => {
@@ -107,7 +107,7 @@
             votecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'post',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }
@@ -127,7 +127,7 @@
             unvotecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'delete',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }

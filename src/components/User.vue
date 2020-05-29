@@ -213,7 +213,7 @@ export default {
       // For now we are authentication with a provisional APIkey
       axios
         .get(
-          `http://127.0.0.1:8000/api/profile/${user}`,
+          `https://hackers-asw.herokuapp.com/api/profile/${user}`,
           config
         )
         .then(response => {
@@ -237,7 +237,7 @@ export default {
       // For now we are authentication with a provisional APIkey
       axios
         .put(
-          `http://127.0.0.1:8000/api/profile/${this.user.username}`,
+          `https://hackers-asw.herokuapp.com/api/profile/${this.user.username}`,
           { about: `${about}` },
           config
         )

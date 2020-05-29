@@ -107,7 +107,7 @@ export default {
       };
       // For now we are authentication with a provisional APIkey
       axios
-        .get(`http://127.0.0.1:8000/api/urls/${id}/comments/${idc}`, config)
+        .get(`https://hackers-asw.herokuapp.com/api/urls/${id}/comments/${idc}`, config)
         .then(response => {
           console.log("It went getcontrib");
           console.log(response.data);
@@ -117,7 +117,7 @@ export default {
           console.log(error.status);
 
           axios
-            .get(`http://127.0.0.1:8000/api/asks/${id}/comments/${idc}`, config)
+            .get(`https://hackers-asw.herokuapp.com/api/asks/${id}/comments/${idc}`, config)
             .then(response => {
               console.log("estic ASKSSS");
               this.url = false;
@@ -181,7 +181,7 @@ export default {
       // For now we are authentication with a provisional APIkey
       axios
         .post(
-          `http://127.0.0.1:8000/api/asks/${this.contribution.id_contribution}/comments/${this.contribution.contribution_ref}`,
+          `https://hackers-asw.herokuapp.com/api/asks/${this.contribution.id_contribution}/comments/${this.contribution.contribution_ref}`,
           { text: `${comment}` },
           config
         )
@@ -193,7 +193,7 @@ export default {
           console.log(error);
           axios
             .post(
-              `http://127.0.0.1:8000/api/urls/${this.contribution.id_contribution}/comments/${this.contribution.contribution_ref}`,
+              `https://hackers-asw.herokuapp.com/api/urls/${this.contribution.id_contribution}/comments/${this.contribution.contribution_ref}`,
               { text: `${comment}` },
               config
             )

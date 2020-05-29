@@ -110,7 +110,7 @@
                 }
                 // For now we are authentication with a provisional APIkey
                 axios.get(
-                    `http://localhost:8000/api/threads/${username}`,config //falta agregar el path correctp
+                    `https://hackers-asw.herokuapp.com/api/threads/${username}`,config //falta agregar el path correctp
                 ).then(response => {
                     console.log("It went Ok----------------------------------------")
                     //console.log(response.data);
@@ -122,7 +122,7 @@
             votecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'post',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }
@@ -142,7 +142,7 @@
             unvotecontrib(idcontrib, ind,user) {
                 axios({
                     method: 'delete',
-                    url: 'http://localhost:8000/api/contributions/' + idcontrib + '/votes',
+                    url: 'https://hackers-asw.herokuapp.com/api/contributions/' + idcontrib + '/votes',
                     headers: {
                         Authorization: apitools.getApikey(),
                     }
